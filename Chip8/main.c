@@ -12,7 +12,9 @@
 
 #include"types.h"
 #include"functions.h"
-#include"functions.c"
+#include"init.c"
+#include"loaders.c"
+#include"exe_cycle.c"
 
 int main(){
 

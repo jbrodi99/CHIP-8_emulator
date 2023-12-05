@@ -34,5 +34,15 @@ typedef struct t_chip_8 {
 
 } t_chip_8;
 
+typedef struct t_nibbles
+{
+    uint16_t nnn;
+    uint8_t kk;
+    uint8_t x; 
+    uint8_t y; 
+    uint8_t n; 
+    uint8_t p;
+    
+} t_nibbles;
 
 #endif 
