@@ -1,4 +1,5 @@
 #ifndef TYPES
+#define TYPES
 #include<stdint.h>
 #define MAX_SIZE_RAM 4096                   //size of memory RAM (4Kb)
 #define REG 16                              //numbers of registers 
@@ -36,13 +37,13 @@ typedef struct t_chip_8 {
 
 typedef struct t_nibbles
 {
+
     uint16_t nnn;
     uint8_t kk;
     uint8_t x; 
     uint8_t y; 
     uint8_t n; 
     uint8_t p;
-    
 } t_nibbles;
 
 #endif 

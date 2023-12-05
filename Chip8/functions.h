@@ -1,4 +1,5 @@
 #ifndef FUNCTIONS
+#define FUNCTIONS
 #include"types.h"
 #include<stdio.h> 
 #include<stdlib.h>  
@@ -16,7 +17,7 @@
 */
 void init_emu(t_chip_8 * machine);
 
-void init_nibles(t_nibbles * nibbles, uint16_t opcode);
+void init_nibbles(t_nibbles * nibbles, uint16_t opcode);
 
 /**
  * This function charge the ROM of the game in the memory RAM from [0x200] address

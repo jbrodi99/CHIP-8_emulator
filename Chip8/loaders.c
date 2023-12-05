@@ -1,12 +1,12 @@
-#include<types.h>
-#include<functions.h>
+#include"types.h"
+#include"functions.h"
 
 void load_ROM(t_chip_8 * machine){
     
     //declarate  length variable, i used for load the legth of the ROMs
     int length;
     //declarate fp variable type FILE* and open the ROM file in mode read
-    FILE * fp = fopen("ROMs/Particle Demo [zeroZshadow, 2008].ch8", "rb");
+    FILE * fp = fopen("/home/usuario/Workspace/C/Proyectos/CHIP-8_emulator/ROMs/Particle Demo [zeroZshadow, 2008].ch8", "rb");
     
     if (fp == NULL){ //the file don't exists
         fprintf(stderr, "Cannot open ROM file.\n"); //printf error

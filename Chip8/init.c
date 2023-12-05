@@ -1,5 +1,6 @@
-#include<types.h>
-#include<functions.h>
+#include"types.h"
+#include"functions.h"
+
 
 void init_emu(t_chip_8 * machine){
 

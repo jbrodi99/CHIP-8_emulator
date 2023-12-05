@@ -1,7 +1,9 @@
-#include<types.h>
-#include<functions.h>
+#include"types.h"
+#include"functions.h"
 
-void cls(t_chip_8 * machine, t_nibbles nibbles);
+void cls(t_chip_8 * machine, t_nibbles nibbles){
+    NULL;
+}
 
 void ret(t_chip_8 * machine, t_nibbles nibbles){
     machine->pc = machine->stack[machine->sp];
@@ -112,9 +114,15 @@ void rnd_Vx_byte(t_chip_8 *machine, t_nibbles nibbles){
     machine->V[nibbles.x] = nibbles.kk & r;
 }
 
-void DRAW();
-void inst_14();
-void inst_14_b();
+void DRAW(t_chip_8 * machine, t_nibbles nibbles){
+    NULL;
+}
+void inst_14(t_chip_8 * machine, t_nibbles nibbles){
+    NULL;
+}
+void inst_14_b(t_chip_8 * machine, t_nibbles nibbles){
+    NULL;
+}
 
 //p = 15
 void  load_Vx_DT(t_chip_8 * machine, t_nibbles nibbles){
