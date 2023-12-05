@@ -6,6 +6,7 @@
 #include<stdbool.h> 
 #include<errno.h>
 #include<time.h>
+#include<SDL2/SDL.h>
 
 /**
  * This function initialize all registers and memory in zero
@@ -18,10 +19,17 @@ void init_emu(t_chip_8 * machine);
 /**
  * This function charge the ROM of the game in the memory RAM from [0x200] address
  * 
- * @param machine - pointer to a variable typo t_chip_8
+ * @param machine - pointer to a variable type t_chip_8
  * @return void - don't return values
 */
 void load_ROM(t_chip_8 * machine);
+
+/**
+ * This function charge the sprites in the memory RAM from [0x50] address
+ * 
+ * @param machine - pointer to a variable type t_chip_8
+*/
+void load_sprites(t_chip_8 * machine);
 
 /**
  * This function run the fetch cycle.

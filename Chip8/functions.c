@@ -34,6 +34,22 @@ void load_ROM(t_chip_8 * machine){
     fclose(fp);
 }
 
+void load_sprites(t_chip_8 * machine){
+    FILE * fp = fopen("Chip8/sprites.bin", "rb");
+    if (fp == NULL)
+    {
+        fprintf(stderr, "Cannot open SPRITES file.\n");
+        exit(1);
+    }
+    
+    fseek(fp, 0, SEEK_END);
+    int length = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    fread(machine->ram + 0x50, length, 1, fp);
+    fclose(fp);
+}
+
 uint16_t fetch(t_chip_8 * machine){
     
     uint16_t opcode;
@@ -192,8 +208,71 @@ void decode_exe(t_chip_8* machine, uint16_t opcode){
         r = rand()% 256;
         machine->V[x] = kk & r;
         break;
-    
+    case 13: 
+        //DRW Vx, Vy, nibble
+        break;
+    case 14:
+        break;
+    case 15:
+        switch (kk)
+        {
+        case 0x07:
+            //Ld Vx, DT
+            machine->V[x] = machine->dt;
+            break;
+        case 0x0A:
+            //LD Vx, K
+            char key = fgetc(stdin);
+            machine->V[x] = key;
+            break;
+        case 0x15:
+            //LD DT, Vx
+            machine->dt = machine->V[x];
+            break;
+        case 0x18:
+            //LD ST, Vx
+            machine->st = machine->V[x];
+            break;
+        case 0x1E:
+            //ADD I, Vx
+            machine->I = machine->I + machine->V[x];
+            break;
+        case 0x29:
+            //LD F, Vx
+            //Set I = location of sprite for digit Vx
+            machine->I = 0x50 + (machine->V[x] * 5);
+            break;
+        case 0x33:
+            /*Store BCD representation of Vx in memory locations I, I+1, and I+2.
+
+            The interpreter takes the decimal value of Vx, and places the hundreds digit in memory at location in I, the tens digit at location I+1, and the ones digit at location I+2.
+
+            */
+            machine->ram[machine->I + 2] = machine->V[x] % 10;
+            machine->ram[machine->I + 1] = (machine->V[x]/10) % 10;
+            machine->ram[machine->I] = (machine->V[x]/100) % 10;
+            break;
+        case 0X55:
+            //Ld from I the values to V0 trougth VF
+            for (int i = 0; i < REG; i++)
+            {
+                machine->ram[machine->I + i] = machine->V[i];
+            }
+            break;
+        case 0x65:
+            //Ld from Vx to VF the values from I address
+            for (int i = 0; i < REG; i++)
+            {
+                machine->V[i] = machine->ram[machine->I + i];
+            }
+            break;
+        default:
+            break;
+        }
+        break;
     default:
         break;
     }
 }
+
+
