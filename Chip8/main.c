@@ -21,12 +21,12 @@ int main(){
     t_chip_8 emu;//emulator type chip8 
     uint16_t opcode;//opcode variable                
     srand(time(NULL));
+    init_emu(&emu);
+    load_ROM(&emu);
 
     bool running = true;
     while (running)
     {
-        init_emu(&emu);
-        load_ROM(&emu);
 
         opcode = fetch(&emu);
 

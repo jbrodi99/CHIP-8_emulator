@@ -26,16 +26,40 @@ uint16_t fetch(t_chip_8 * machine){
     return opcode;
 }
 
+void deco_inst_0(t_chip_8 * machine, t_nibbles nibbles){
+    void (*proc0[]) (t_chip_8*, t_nibbles) = {cls, ret};
+    if (nibbles.kk == 0xE0)
+        proc0[0] (&machine, nibbles);
+    else    
+        proc0[1] (&machine, nibbles);
+}
+
+void deco_inst_8(t_chip_8 * machine, t_nibbles nibbles){
+
+    void (*proc8[]) (t_chip_8*, t_nibbles) = {load_Vx_Vy, or_Vx_Vy, and_Vx_Vy,xor_Vx_Vy,add_Vx_Vy,sub_Vx_Vy,shr_Vx,sub_Vy_Vx,NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, shl_Vx};
+
+    proc8[nibbles.n] (&machine, nibbles);
+}
+
+void deco_inst_14(t_chip_8 *machine, t_nibbles nibble){
+
+    void (*proc14[]) (t_chip_8*, t_nibbles) = {inst_14, inst_14_b};
+}
+
+void deco_inst_15(t_chip_8 * machine, t_nibbles nibbles){
+
+    void (*proc15[]) (t_chip_8*, t_nibbles) = {load_Vx_DT, load_Vx_key, load_DT_Vx, load_ST_Vx, add_I_Vx, load_F_Vx,load_bcd_number,load_I_V, load_V_I};
+}
+
 void decode_exe(t_chip_8* machine, uint16_t opcode){
     
     t_nibbles nibb;
     init_nibbles(&nibb , opcode);
 
-    void (*proc[]) (t_chip_8*, t_nibbles) = {ret, jump, call, se, sne, se_x_y,load_x_byte, add_x_byte,
-                                            sne_Vx_Vy, load_I_nnn, jump_V0_nnn, rnd_Vx_byte, 
-                                            load_Vx_DT, load_Vx_key, load_DT_Vx, load_ST_Vx,
-                                            add_I_Vx, load_F_Vx, load_bcd_number, load_I_V, load_V_I};
+    void (*proc[]) (t_chip_8*, t_nibbles) = {deco_inst_0,jump, call, se, sne, se_x_y,load_x_byte, add_x_byte,
+                                            deco_inst_8, sne_Vx_Vy, load_I_nnn, jump_V0_nnn, rnd_Vx_byte, DRAW, deco_inst_14, deco_inst_15};
 
+    proc[nibb.p] (&machine, nibb);
 }
 
 

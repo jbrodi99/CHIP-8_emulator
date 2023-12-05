@@ -1,7 +1,7 @@
 #include<types.h>
 #include<functions.h>
 
-//void clear display();
+void cls(t_chip_8 * machine, t_nibbles nibbles);
 
 void ret(t_chip_8 * machine, t_nibbles nibbles){
     machine->pc = machine->stack[machine->sp];
@@ -76,7 +76,7 @@ void shr_Vx(t_chip_8 * machine, t_nibbles nibbles){
         machine->V[nibbles.x] = machine->V[nibbles.x] >> 1;
 }
 
-void sub_Vx_Vy(t_chip_8 * machine, t_nibbles nibbles){
+void sub_Vy_Vx(t_chip_8 * machine, t_nibbles nibbles){
     if (machine->V[nibbles.y] > machine->V[nibbles.x])
         machine->V[0xF] = 0x1;
         machine->V[nibbles.x] = machine->V[nibbles.y] - machine->V[nibbles.x];
@@ -88,6 +88,9 @@ void shl_Vx(t_chip_8 *machine, t_nibbles nibbles){
         machine->V[nibbles.x] = machine->V[nibbles.x] << 1;
 }
 
+void NOOP(t_chip_8*, t_nibbles){
+    //null
+}
 //intrution from 9
 
 void sne_Vx_Vy(t_chip_8 * machine, t_nibbles nibbles){
@@ -109,8 +112,10 @@ void rnd_Vx_byte(t_chip_8 *machine, t_nibbles nibbles){
     machine->V[nibbles.x] = nibbles.kk & r;
 }
 
-//DRAW();
-//it 14
+void DRAW();
+void inst_14();
+void inst_14_b();
+
 //p = 15
 void  load_Vx_DT(t_chip_8 * machine, t_nibbles nibbles){
     machine->V[nibbles.x] = machine->dt;
@@ -151,4 +156,5 @@ void load_V_I(t_chip_8 * machine, t_nibbles nibbles){
     for (int i = 0; i < REG; i++)
         machine->V[i] = machine->ram[machine->I + i];
 }
+
 
