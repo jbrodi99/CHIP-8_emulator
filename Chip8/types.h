@@ -3,7 +3,8 @@
 #include<stdint.h>
 #define MAX_SIZE_RAM 4096                   //size of memory RAM (4Kb)
 #define REG 16                              //numbers of registers 
-
+#define WIDTH 640
+#define HEIGHT 320
 /**
  * the struct t_chip_8 contain:
  * 

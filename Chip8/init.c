@@ -2,6 +2,30 @@
 #include"functions.h"
 
 
+void init_SDL(SDL_Window* window, SDL_Renderer* renderer){
+    
+    int width = WIDTH, heigth = HEIGHT;
+    
+    if(SDL_Init(SDL_INIT_EVERYTHING) < 0){
+        printf("SDL could not initialize SDL_ERROR: %s\n", SDL_GetError());
+        return -1;
+    }
+    else{
+        window = SDL_CreateWindow("CHIP_8",
+                                    SDL_WINDOWPOS_CENTERED,
+                                    SDL_WINDOWPOS_CENTERED,
+                                    640, 320, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
+        
+        if(window = NULL){
+            printf("Window could not be created, SDL_Error: %s\n", SDL_GetError());
+            return -1;
+        }
+        
+    }
+    
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+}
+
 void init_emu(t_chip_8 * machine){
 
     machine->pc = machine->I = machine->dt = machine->sp = machine->sp = 0x00;
@@ -21,3 +45,4 @@ void init_nibbles(t_nibbles * nibbles, uint16_t opcode){
     nibbles->p = (opcode >> 12);
     
 }
+
